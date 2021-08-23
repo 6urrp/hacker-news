@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
-import { getStoryData } from "../../services/storyData"
-import { getID } from "../../services/fetchID";
+import { miliToHours } from "../../utilities/getHours";
+import { getComments } from "../../utilities/getComments";
+import { getShortUrl } from "../../utilities/getShortUrl";
 import "./SingleNews.css";
 
 
@@ -14,30 +15,15 @@ class SingleNews extends Component {
         }
     }
 
-    // getThatID = () => {
-    //     getID()
-    //         .then(id => this.setState({newsId: id}))
-    // }
-
-    // componentDidMount () {
-    //     for (let i = 0; i < 10; i++) {
-    //         getStoryData(this.state.newsId[i])
-    //         .then(story => {
-    //             this.setState({story});
-    //         })
-    //     }
-        
-    // }
-
     render () {
         
         return (
-                <li className="title"><span>{this.props.single.title}</span>
+                <li className="title"><span>{this.props.single.title}</span> (<span>{getShortUrl(this.props.single.url)}</span>)
                     <ul className="mainUl">
                         <li className="points"><i class="fas fa-heart"></i>  {this.props.single.score} points</li>
                         <li className="user"><i class="fas fa-user"></i>  {this.props.single.by}</li>
-                        <li className="time"><i class="far fa-clock"></i>  {this.props.single.time}</li>
-                        <li className="comments">{this.props.single.descendants} comments</li>
+                        <li className="time"><i class="far fa-clock"></i>  {miliToHours(this.props.single.time)}</li>
+                        <li className="comments">{getComments(this.props.single.descendants)}</li>
                     </ul>
                 </li>
         )
